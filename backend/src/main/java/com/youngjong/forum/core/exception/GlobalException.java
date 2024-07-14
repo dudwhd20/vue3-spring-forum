@@ -4,13 +4,7 @@ import lombok.Getter;
 
 import java.io.Serial;
 
-/**
- * 전역 예외 클래스.
- *
- * @author yuri56
- * @version 1.0
- * @since 1.0
- */
+
 @Getter
 public class GlobalException extends RuntimeException {
 
