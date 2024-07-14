@@ -1,0 +1,54 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+
+spring:
+  application:
+    name: forum-service
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    open-in-view: off
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/forum;MODE=MariaDB;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    hikari:
+      connection-timeout: 100000
+      minimum-idle: 5
+      max-lifetime: 1800000
+      idleTimeout: 1600000
+      maximum-pool-size: 10
+      pool-name: "${spring.application.name}-POOL-1"
+  sql:
+    init:
+      schema-locations: classpath:schema.sql
+      mode: always
+
+jwt:
+  token:
+    header: Authorization
+    secret: a54da265c67440068ab1a1bf2e6b4df2b5ffabc99fcab5a619ec07b90cfc736c58c617c5e44c943d441cdcdfec249055444511655d420717afbbc1f030155f5c
+    access-token-expiration-seconds:  1800   # 30분
+    refresh-token-expiration-seconds: 1281000 # 15일
+
+
+
+#springdoc:
+#  api-docs:
+#    path: /v3/api-docs
+#  default-consumes-media-type: application/json
+#  default-produces-media-type: application/json
+#  swagger-ui:
+#    operations-sorter: method
+#    tags-sorter: alpha
+#    path: /swagger-ui.html
+#    disable-swagger-default-url: true
+#  paths-to-match:
+#    - /v1/api/**
