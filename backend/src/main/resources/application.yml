@@ -38,6 +38,10 @@ jwt:
     access-token-expiration-seconds:  1800   # 30분
     refresh-token-expiration-seconds: 1281000 # 15일
 
+logging:
+  level:
+    org.hibernate.sql: debug
+    org.hibernate.type.descriptor.sql: trace
 
 
 #springdoc:
