@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -47,8 +46,8 @@ public class SecurityConfig {
                 .requestMatchers(PathRequest.toH2Console()).permitAll()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .requestMatchers("/users/authenticate").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/member").permitAll()
+                .requestMatchers("/api/auth").permitAll()
+                .requestMatchers("/api/member").permitAll()
                 .anyRequest().authenticated());
         http.addFilterBefore(new JwtAuthenticationFilter(jwtProperties, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
@@ -58,6 +57,7 @@ public class SecurityConfig {
     public AuthenticationProvider DaoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(myUserDetailService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
 
