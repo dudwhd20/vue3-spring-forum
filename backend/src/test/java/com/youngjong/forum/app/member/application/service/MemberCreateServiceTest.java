@@ -1,18 +1,16 @@
-package com.youngjong.forum.app.member.adapter.in.web;
+package com.youngjong.forum.app.member.application.service;
 
+import com.youngjong.forum.app.member.application.port.in.CreateMemberUseCase;
 import com.youngjong.forum.app.member.application.port.in.MemberCreateCommand;
-import com.youngjong.forum.app.member.application.port.in.MemberUseCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
-@AutoConfigureMockMvc
-class MemberServiceTest {
+class MemberCreateServiceTest {
     @Autowired
-    MemberUseCase memberUseCase;
+    CreateMemberUseCase memberUseCase;
 
     @Test
     @Transactional

@@ -1,24 +1,23 @@
 package com.youngjong.forum.app.member.adapter.out.persistence;
 
-import com.youngjong.forum.app.member.application.port.out.MemberPersistencePort;
+import com.youngjong.forum.app.member.application.port.out.FindOneMemberPort;
 import com.youngjong.forum.app.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 @Transactional
 @RequiredArgsConstructor
-public class MemberRepository implements MemberPersistencePort {
+public class FindOneMemberAdapter implements FindOneMemberPort {
 
     private final MemberJPARepository memberJPARepository;
 
 
     @Override
-    public void create(Member member) {
-        memberJPARepository.save(
-                MemberMapper.toEntity(member.getId(), member.getEmail(),member.getName(),member.getPassword())
-        );
-
+    public Optional<Member> findOneMemberByEmail(String email) {
+        return memberJPARepository.findByEmail(email).map(MemberMapper::toDomain);
     }
 }

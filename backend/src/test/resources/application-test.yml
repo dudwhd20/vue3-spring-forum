@@ -16,11 +16,16 @@ spring:
         highlight_sql: true
     show-sql: true
     open-in-view: off
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:~/forum;MODE=MariaDB;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
     username: sa
     password:
+
     hikari:
       connection-timeout: 100000
       minimum-idle: 5
