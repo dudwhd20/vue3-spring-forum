@@ -1,11 +1,14 @@
 package com.youngjong.forum.core.security;
 
+import com.youngjong.forum.app.member.adapter.in.security.MyUserDetailService;
 import com.youngjong.forum.core.security.token.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -28,6 +31,7 @@ public class SecurityConfig {
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtProperties jwtProperties;
     private final JwtTokenProvider jwtTokenProvider;
+    private final MyUserDetailService myUserDetailService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -48,6 +52,13 @@ public class SecurityConfig {
                 .anyRequest().authenticated());
         http.addFilterBefore(new JwtAuthenticationFilter(jwtProperties, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationProvider DaoAuthenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(myUserDetailService);
+        return daoAuthenticationProvider;
     }
 
 
