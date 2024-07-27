@@ -1,7 +1,6 @@
 package com.youngjong.forum.app.member.adapter.in.web;
 
 import com.youngjong.forum.app.member.application.port.in.AuthenticationCommand;
-import com.youngjong.forum.app.member.application.port.in.FindOneMemberUseCase;
 import com.youngjong.forum.core.security.token.JwtProperties;
 import com.youngjong.forum.core.security.token.JwtTokenProvider;
 import jakarta.servlet.http.Cookie;
@@ -25,8 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 public class AuthenticationController {
-
-    private final FindOneMemberUseCase findOneMemberUseCase;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final JwtProperties jwtProperties;
