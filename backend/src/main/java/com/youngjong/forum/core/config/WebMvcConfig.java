@@ -28,7 +28,7 @@ public class WebMvcConfig {
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
 
-        source.registerCorsConfiguration("**", configuration);
+        source.registerCorsConfiguration("/**", configuration);
         return new CorsFilter(source);
     }
 
