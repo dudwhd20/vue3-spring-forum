@@ -7,5 +7,6 @@ export interface RequestUser  {
 
 export function loginMember(data: RequestUser) {
   const url = '/api/auth'
+
   return axiosInstance.post(url, data)
 }
