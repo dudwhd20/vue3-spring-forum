@@ -51,6 +51,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth").permitAll()
                 .requestMatchers("/api/member").permitAll()
                 .anyRequest().authenticated());
+        http.authenticationProvider(DaoAuthenticationProvider());
         http.addFilterBefore(new JwtAuthenticationFilter(jwtProperties, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -60,7 +61,6 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
-    @Bean
     public AuthenticationProvider DaoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(myUserDetailService);
