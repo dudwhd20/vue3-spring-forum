@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -34,9 +34,6 @@ public class NoticeJPAEntity {
     @Column(name = "CONTENT", nullable = false)
     private String content;
 
-    @NotNull
-    @Column(name = "POST_DATE", nullable = false)
-    private Instant postDate;
 
     @ColumnDefault("0")
     @Column(name = "VIEW_COUNT")
@@ -44,7 +41,7 @@ public class NoticeJPAEntity {
 
     @NotNull
     @Column(name = "CRATE_DATE", nullable = false)
-    private Instant crateDate;
+    private LocalDateTime crateDate;
 
     @Size(max = 255)
     @NotNull
@@ -53,7 +50,7 @@ public class NoticeJPAEntity {
 
     @NotNull
     @Column(name = "UPDATE_DATE", nullable = false)
-    private Instant updateDate;
+    private LocalDateTime updateDate;
 
     @Size(max = 255)
     @NotNull

@@ -12,7 +12,6 @@ public class Notice {
     private Integer id;
     private String title;
     private String content;
-    private LocalDateTime postDate;
     private Integer viewCount;
     private String memberId;
     private LocalDateTime crateDate;
@@ -21,11 +20,10 @@ public class Notice {
     private String updateBy;
 
     @Builder
-    public Notice(Integer id, String title, String content, LocalDateTime postDate, Integer viewCount, String memberId, LocalDateTime crateDate, String createBy, LocalDateTime updateDate, String updateBy) {
+    public Notice(Integer id, String title, String content, Integer viewCount, String memberId, LocalDateTime crateDate, String createBy, LocalDateTime updateDate, String updateBy) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.postDate = postDate;
         this.viewCount = viewCount;
         this.memberId = memberId;
         this.crateDate = crateDate;
