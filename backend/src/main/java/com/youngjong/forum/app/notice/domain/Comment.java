@@ -1,4 +1,4 @@
-package com.youngjong.forum.app.forum.domain;
+package com.youngjong.forum.app.notice.domain;
 
 import lombok.Builder;
 import lombok.Getter;

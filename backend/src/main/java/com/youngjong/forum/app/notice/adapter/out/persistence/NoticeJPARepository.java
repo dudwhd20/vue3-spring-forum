@@ -1,6 +1,6 @@
-package com.youngjong.forum.app.forum.adapter.out.persistence;
+package com.youngjong.forum.app.notice.adapter.out.persistence;
 
-import com.youngjong.forum.app.forum.domain.Notice;
+import com.youngjong.forum.app.notice.domain.Notice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NoticeJPARepository extends JpaRepository<Notice, Long> {

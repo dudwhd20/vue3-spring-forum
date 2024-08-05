@@ -1,4 +1,4 @@
-package com.youngjong.forum.app.forum.adapter.out.persistence;
+package com.youngjong.forum.app.notice.adapter.out.persistence;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

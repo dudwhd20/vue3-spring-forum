@@ -1,4 +1,4 @@
-package com.youngjong.forum.app.forum.application.in;
+package com.youngjong.forum.app.notice.application.in;
 
 public record CreateNoticeCommand(
      String title,
