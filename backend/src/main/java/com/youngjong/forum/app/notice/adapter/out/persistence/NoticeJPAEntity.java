@@ -1,13 +1,13 @@
 package com.youngjong.forum.app.notice.adapter.out.persistence;
 
+import com.youngjong.forum.core.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,7 +18,8 @@ import java.time.LocalDateTime;
         sequenceName = "notice_seq",
         allocationSize = 1
 )
-public class NoticeJPAEntity {
+@NoArgsConstructor
+public class NoticeJPAEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "NOTICE_SEQ_GENERATOR")
     @Column(name = "ID", nullable = false)
@@ -39,22 +40,11 @@ public class NoticeJPAEntity {
     @Column(name = "VIEW_COUNT")
     private Long viewCount;
 
-    @NotNull
-    @Column(name = "CRATE_DATE", nullable = false)
-    private LocalDateTime crateDate;
 
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "CREATE_BY", nullable = false)
-    private String createBy;
+    public NoticeJPAEntity(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
-    @NotNull
-    @Column(name = "UPDATE_DATE", nullable = false)
-    private LocalDateTime updateDate;
-
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "UPDATE_BY", nullable = false)
-    private String updateBy;
 
 }

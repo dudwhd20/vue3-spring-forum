@@ -31,4 +31,11 @@ public class Notice {
         this.updateDate = updateDate;
         this.updateBy = updateBy;
     }
+
+    public Notice(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+
 }
