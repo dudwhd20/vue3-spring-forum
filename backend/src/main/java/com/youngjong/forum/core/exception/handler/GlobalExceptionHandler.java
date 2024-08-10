@@ -81,7 +81,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(GlobalException.class)
     protected ErrorResponses handleGlobalException(GlobalException e) {
-        return new ErrorResponses(ExceptionCodes.BUSINESS_ERROR);
+        return new ErrorResponses(e.getExceptionCodes());
     }
 
     @ExceptionHandler(Exception.class)
