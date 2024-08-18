@@ -6,11 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "NOTICE")
 @SequenceGenerator(
@@ -44,6 +42,10 @@ public class NoticeJPAEntity extends BaseEntity {
     public NoticeJPAEntity(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public NoticeJPAEntity(Long id){
+        this.id = id;
     }
 
 
