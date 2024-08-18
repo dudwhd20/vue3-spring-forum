@@ -2,8 +2,11 @@ package com.youngjong.forum.app.notice.adapter.in.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.youngjong.forum.app.member.adapter.in.security.MyUserDetailService;
+import com.youngjong.forum.app.notice.adapter.out.persistence.NoticeJPAEntity;
+import com.youngjong.forum.app.notice.adapter.out.persistence.NoticeJPARepository;
 import com.youngjong.forum.app.notice.application.in.CreateNoticeCommand;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,9 +16,12 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -25,6 +31,9 @@ class NoticeControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @Autowired
+    NoticeJPARepository noticeJPARepository;
 
     @Autowired
     MyUserDetailService customUserDetailsService;
@@ -37,6 +46,7 @@ class NoticeControllerTest {
     }
 
     @Test
+    @DisplayName("게시글 생성")
     void create() throws Exception {
         var dto = CreateNoticeCommand.builder().title("title").content("content").build();
         var contentJson = new ObjectMapper().writeValueAsString(dto);
@@ -49,4 +59,34 @@ class NoticeControllerTest {
                 .andExpect(status().isOk())
         ;
     }
+
+    @Test
+    @DisplayName("게시글 생성")
+    void findOne() throws Exception {
+        long id = 257L;
+
+        //when
+        mockMvc.perform(get("/api/notice/" + id)
+                .contentType("application/json"))
+                //then
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.result.id").value(id))
+        ;
+    }
+
+    @Test
+    @DisplayName("게시글 삭제")
+    void delete() throws Exception {
+        var delData = noticeJPARepository.save(new NoticeJPAEntity("title", "content"));
+        long targetId = delData.getId();
+
+        //when
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/notice/" + targetId)
+                .contentType("application/json"))
+                //then
+                .andExpect(status().isOk())
+        ;
+    }
+
+
 }
