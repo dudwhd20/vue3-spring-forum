@@ -48,5 +48,10 @@ public class NoticeJPAEntity extends BaseEntity {
         this.id = id;
     }
 
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
 
 }
