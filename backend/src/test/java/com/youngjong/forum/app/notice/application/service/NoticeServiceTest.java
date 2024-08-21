@@ -3,9 +3,7 @@ package com.youngjong.forum.app.notice.application.service;
 import com.youngjong.forum.app.member.adapter.in.security.MyUserDetailService;
 import com.youngjong.forum.app.notice.adapter.out.persistence.NoticeJPAEntity;
 import com.youngjong.forum.app.notice.adapter.out.persistence.NoticeJPARepository;
-import com.youngjong.forum.app.notice.application.in.CreateNoticeCommand;
-import com.youngjong.forum.app.notice.application.in.DeleteNoticeUseCase;
-import com.youngjong.forum.app.notice.application.in.FindOneNoticeUseCase;
+import com.youngjong.forum.app.notice.application.in.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +34,12 @@ class NoticeServiceTest {
     @Autowired
     DeleteNoticeUseCase deleteNoticeUseCase;
 
+    @Autowired
+    ListNoticeUseCase listNoticeUseCase;
+
+    @Autowired
+    UpdateNoticeService updateNoticeService;
+
     @BeforeEach
     public void setUp(){
         UserDetails user = customUserDetailsService.loadUserByUsername("test@test.com");
@@ -65,5 +69,24 @@ class NoticeServiceTest {
         long targetId = delData.getId();
 
         deleteNoticeUseCase.deleteNotice(targetId);
+    }
+
+    @Test
+    @DisplayName("게시글 전체 조회")
+    public void list(){
+        var r = listNoticeUseCase.list();
+        assertThat(r).isNotNull();
+    }
+
+    @Test
+    @DisplayName("게시글 수정")
+    public void update(){
+        var delData = noticeJPARepository.save(new NoticeJPAEntity("title", "content"));
+        updateNoticeService.update(String.valueOf(delData.getId()), UpdateNoticeCommand.builder().title("test").content("test").build());
+
+        var r = findOneNoticeUseCase.findOne(delData.getId());
+        assertThat(r).isNotNull();
+        assertThat(r.title()).isEqualTo("test");
+        assertThat(r.content()).isEqualTo("test");
     }
 }

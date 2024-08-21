@@ -5,6 +5,7 @@ import com.youngjong.forum.app.member.adapter.in.security.MyUserDetailService;
 import com.youngjong.forum.app.notice.adapter.out.persistence.NoticeJPAEntity;
 import com.youngjong.forum.app.notice.adapter.out.persistence.NoticeJPARepository;
 import com.youngjong.forum.app.notice.application.in.CreateNoticeCommand;
+import com.youngjong.forum.app.notice.application.in.UpdateNoticeCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -85,6 +87,36 @@ class NoticeControllerTest {
                 .contentType("application/json"))
                 //then
                 .andExpect(status().isOk())
+        ;
+    }
+
+    @Test
+    @DisplayName("게시글 전체 조회")
+    void list() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/notice" )
+                .contentType("application/json"))
+                //then
+                .andDo(print())
+                .andExpect(status().isOk())
+        ;
+    }
+
+    @Test
+    @DisplayName("게시글 수정")
+    void update() throws Exception {
+
+        var delData = noticeJPARepository.save(new NoticeJPAEntity("title", "content"));
+
+
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/notice/" + delData.getId())
+                .content(
+                        new ObjectMapper().writeValueAsString(UpdateNoticeCommand.builder().title("test").content("test").build())
+                )
+                .contentType("application/json"))
+                //then
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("SUCCESS"))
         ;
     }
 
