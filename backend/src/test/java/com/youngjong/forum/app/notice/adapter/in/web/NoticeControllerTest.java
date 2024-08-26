@@ -54,7 +54,7 @@ class NoticeControllerTest {
         var contentJson = new ObjectMapper().writeValueAsString(dto);
 
         //when
-        mockMvc.perform(post("/api/notice")
+        mockMvc.perform(post("/api/v1/notice")
                 .content(contentJson)
                 .contentType("application/json"))
                 //then
@@ -68,7 +68,7 @@ class NoticeControllerTest {
         long id = 257L;
 
         //when
-        mockMvc.perform(get("/api/notice/" + id)
+        mockMvc.perform(get("/api/v1/notice/" + id)
                 .contentType("application/json"))
                 //then
                 .andExpect(status().isOk())
@@ -83,7 +83,7 @@ class NoticeControllerTest {
         long targetId = delData.getId();
 
         //when
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/notice/" + targetId)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/notice/" + targetId)
                 .contentType("application/json"))
                 //then
                 .andExpect(status().isOk())
@@ -93,7 +93,7 @@ class NoticeControllerTest {
     @Test
     @DisplayName("게시글 전체 조회")
     void list() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/notice" )
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/notice" )
                 .contentType("application/json"))
                 //then
                 .andDo(print())
@@ -108,7 +108,7 @@ class NoticeControllerTest {
         var delData = noticeJPARepository.save(new NoticeJPAEntity("title", "content"));
 
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/notice/" + delData.getId())
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/notice/" + delData.getId())
                 .content(
                         new ObjectMapper().writeValueAsString(UpdateNoticeCommand.builder().title("test").content("test").build())
                 )

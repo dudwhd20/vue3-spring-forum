@@ -15,6 +15,6 @@ public class CreateNoticeService implements CreateNoticeUseCase {
 
     @Override
     public void createNotice(CreateNoticeCommand command) {
-        createNoticePort.create(new Notice(command.title(), command.content()));
+        createNoticePort.create(new Notice().addNotice(command.title(), command.content()));
     }
 }

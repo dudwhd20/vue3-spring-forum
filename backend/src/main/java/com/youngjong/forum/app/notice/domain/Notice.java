@@ -1,14 +1,15 @@
 package com.youngjong.forum.app.notice.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.youngjong.forum.app.comment.domain.Comment;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @ToString
 public class Notice {
     private Long id;
@@ -21,23 +22,17 @@ public class Notice {
     private LocalDateTime updateDate;
     private String updateBy;
 
-    @Builder
-    public Notice(Long id, String title, String content, Long viewCount, String memberId, LocalDateTime crateDate, String createBy, LocalDateTime updateDate, String updateBy) {
-        this.id = id;
+    private List<Comment> comments;
+
+
+
+    public Notice addNotice(String title, String content) {
         this.title = title;
         this.content = content;
-        this.viewCount = viewCount;
-        this.memberId = memberId;
-        this.crateDate = crateDate;
-        this.createBy = createBy;
-        this.updateDate = updateDate;
-        this.updateBy = updateBy;
+        return Notice.builder().title(title).content(content).build();
     }
 
-    public Notice(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
+
 
 
 
