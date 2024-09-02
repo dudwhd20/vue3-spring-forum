@@ -3,7 +3,9 @@ import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 import { loginMember} from '@/api/authtication'
 import type { RequestUser } from '@/api/authtication'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 
 const $q = useQuasar()
 const username = ref('')
@@ -21,6 +23,7 @@ const login = () => {
           type: 'positive',
           message: 'Login successful.'
         })
+        router.push('/main')
       })
       .catch(() => {
         $q.notify({
