@@ -23,7 +23,7 @@ const login = () => {
           type: 'positive',
           message: 'Login successful.'
         })
-        router.push('/main')
+        router.push('/main/article')
       })
       .catch(() => {
         $q.notify({
