@@ -82,7 +82,10 @@ class NoticeServiceTest {
     @DisplayName("게시글 수정")
     public void update(){
         var delData = noticeJPARepository.save(new NoticeJPAEntity("title", "content"));
-        updateNoticeService.update(String.valueOf(delData.getId()), UpdateNoticeCommand.builder().title("test").content("test").build());
+
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        updateNoticeService.update(String.valueOf(delData.getId()), UpdateNoticeCommand.builder().title("test").content("test").build()
+                ,userDetails);
 
         var r = findOneNoticeUseCase.findOne(delData.getId());
         assertThat(r).isNotNull();
