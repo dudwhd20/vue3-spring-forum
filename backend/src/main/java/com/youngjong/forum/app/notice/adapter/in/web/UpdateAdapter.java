@@ -2,6 +2,8 @@ package com.youngjong.forum.app.notice.adapter.in.web;
 
 import com.youngjong.forum.app.notice.application.in.UpdateNoticeCommand;
 import com.youngjong.forum.app.notice.application.in.UpdateNoticeUseCase;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +17,7 @@ public class UpdateAdapter {
 
 
     @PutMapping("/{id}")
-    public void update(@PathVariable String id, @RequestBody UpdateNoticeCommand updateNoticeCommand) {
-        updateNoticeUseCase.update(id, updateNoticeCommand);
+    public void update(@PathVariable String id, @RequestBody UpdateNoticeCommand updateNoticeCommand, @AuthenticationPrincipal UserDetails userDetails) {
+        updateNoticeUseCase.update(id, updateNoticeCommand, userDetails);
     }
 }
