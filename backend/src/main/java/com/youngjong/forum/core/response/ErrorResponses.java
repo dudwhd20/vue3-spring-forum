@@ -25,6 +25,12 @@ public class ErrorResponses {
         this.code = codes.getCode();
     }
 
+    public ErrorResponses(ExceptionCodes codes, String message) {
+        this.message = message;
+        this.status = codes.getStatus().value();
+        this.code = codes.getCode();
+    }
+
     public ErrorResponses(ExceptionCodes codes, List<FieldError> errors) {
         this.message = codes.getMessage();
         this.status = codes.getStatus().value();

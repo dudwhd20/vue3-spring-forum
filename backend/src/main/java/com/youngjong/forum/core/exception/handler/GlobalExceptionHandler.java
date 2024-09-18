@@ -22,6 +22,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @RestControllerAdvice(basePackages = "com.younjong.forum")
@@ -72,6 +73,17 @@ public class GlobalExceptionHandler {
         return new ErrorResponses(ExceptionCodes.USER_NOT_FOUND);
     }
 
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    protected ErrorResponses handleIllegalArgumentException(IllegalArgumentException e) {
+        return new ErrorResponses(ExceptionCodes.BAD_REQUEST, e.getMessage());
+    }
+
+
+    @ExceptionHandler(NoSuchElementException.class)
+    protected ErrorResponses handleIllegalArgumentException(NoSuchElementException e) {
+        return new ErrorResponses(ExceptionCodes.BAD_REQUEST, e.getMessage());
+    }
 
     @ExceptionHandler(AccessDeniedException.class)
     protected ErrorResponses handleAccessDeniedException(AccessDeniedException e) {
