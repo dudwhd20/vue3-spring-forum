@@ -7,8 +7,12 @@ import com.youngjong.forum.app.notice.application.in.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 class NoticeServiceTest {
 
+    private static final Logger log = LoggerFactory.getLogger(NoticeServiceTest.class);
     @Autowired
     CreateNoticeService createNoticeService;
     @Autowired
@@ -39,6 +44,9 @@ class NoticeServiceTest {
 
     @Autowired
     UpdateNoticeService updateNoticeService;
+
+    @Autowired
+    SearchNoticeUseCase searchNoticeUseCase;
 
     @BeforeEach
     public void setUp(){
@@ -91,5 +99,20 @@ class NoticeServiceTest {
         assertThat(r).isNotNull();
         assertThat(r.title()).isEqualTo("test");
         assertThat(r.content()).isEqualTo("test");
+    }
+
+    @Test
+    @DisplayName("게시글 페이징")
+    public void search(){
+        var delData = noticeJPARepository.save(new NoticeJPAEntity("title", "content"));
+
+        int page = 0; // 첫 번째 페이지
+        int size = 10; // 페이지당 10개의 항목
+
+        Pageable pageable = PageRequest.of(page, size);
+        var r = searchNoticeUseCase.searchNotice("title", null, pageable);
+        assertThat(r).isNotNull();
+        assertThat(r.getTotalElements()).isGreaterThan(0);
+        assertThat(r.get().toList().get(0).title()).isEqualTo("title");
     }
 }
