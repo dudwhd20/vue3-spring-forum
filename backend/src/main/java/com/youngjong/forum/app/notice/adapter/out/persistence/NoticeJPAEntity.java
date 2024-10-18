@@ -65,5 +65,9 @@ public class NoticeJPAEntity extends BaseEntity {
         comment.setNotice(this);
     }
 
+    public void increaseViewCount() {
+        this.viewCount++;
+    }
+
 
 }

@@ -18,10 +18,16 @@ public class FindOneNoticeAdapter implements FindOneNoticePort {
         this.noticeJPARepository = noticeJPARepository;
     }
 
+    /**
+     * 게시글 상세 보기 시 조회수 증가
+     * @param id 게시글 ID
+     * @return 게시글 상세 정보
+     */
     @Override
     public Notice findOne(Long id) {
-        return NoticeMapper.toDomain(noticeJPARepository.findById(id).orElseThrow(
-                ()-> new NoSuchElementException("해당 게시글이 없습니다.")
-        ));
+        var noticeJPAEntity =  noticeJPARepository.findById(id).orElseThrow(
+                ()-> new NoSuchElementException("해당 게시글이 없습니다."));
+         noticeJPAEntity.increaseViewCount();
+        return NoticeMapper.toDomain(noticeJPAEntity);
     }
 }
