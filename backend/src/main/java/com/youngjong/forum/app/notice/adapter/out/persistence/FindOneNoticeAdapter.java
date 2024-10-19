@@ -3,6 +3,7 @@ package com.youngjong.forum.app.notice.adapter.out.persistence;
 import com.youngjong.forum.app.notice.application.out.FindOneNoticePort;
 import com.youngjong.forum.app.notice.application.out.NoticeMapper;
 import com.youngjong.forum.app.notice.domain.Notice;
+import com.youngjong.forum.core.security.SecurityUtil;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,10 @@ public class FindOneNoticeAdapter implements FindOneNoticePort {
     public Notice findOne(Long id) {
         var noticeJPAEntity =  noticeJPARepository.findById(id).orElseThrow(
                 ()-> new NoSuchElementException("해당 게시글이 없습니다."));
-         noticeJPAEntity.increaseViewCount();
+        var currUser = SecurityUtil.getCurrentUserId().orElseThrow(()-> new NoSuchElementException("로그인이 필요합니다."));
+        if(!currUser.equals(noticeJPAEntity.getCreateBy())){
+            noticeJPAEntity.increaseViewCount();
+        }
         return NoticeMapper.toDomain(noticeJPAEntity);
     }
 }
